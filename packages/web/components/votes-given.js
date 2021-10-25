@@ -1,28 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { CastContext } from "../lib/CastContext";
 import { TwitterContext } from "../lib/TwitterContext";
-import QuadraticReceived from "../components/quadratic-received";
+import QuadraticGiven from "./quadratic-given";
 import getData from "../../web/lib/utils";
 
-export default function VotesReceived(props) {
-  const candidate = props.candidate;
+export default function VotesGiven(props) {
+  const voter = props.voter;
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [received, setReceived] = useState(null);
+  const [given, setGiven] = useState(null);
   const [cast] = useContext(CastContext);
   const [twitterHandle] = useContext(TwitterContext);
 
   useEffect(() => {
-    getData(`https://quadratictrust.com/api/ballots?candidate=${candidate}`)
+    getData(`https://quadratictrust.com/api/ballots?voter=${voter}`)
       .then((data) => {
-        setReceived(data.data.ballots);
+        setGiven(data.data.ballots);
         setIsLoading(false);
       })
       .catch((error) => {
         setError(error);
         setIsLoading(false);
       });
-  }, [candidate, cast, twitterHandle]);
+  }, [voter, cast, twitterHandle]);
 
   if (error) {
     return (
@@ -55,12 +55,12 @@ export default function VotesReceived(props) {
             strokeLinecap="round"
           />
         </svg>
-        <span className="text-base">COUNTING VOTES...</span>
+        <span>COUNTING VOTES...</span>
       </div>
     );
   }
 
-  if (received.length === 0) {
+  if (given.length === 0) {
     return (
       <div className="flex flex-row mt-2 font-karla text-trust-blue">
         <span className="text-base">NO VOTES YET</span>
@@ -70,7 +70,7 @@ export default function VotesReceived(props) {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {received.length != 0 && <QuadraticReceived votes={received} />}
+      {given.length != 0 && <QuadraticGiven votes={given} />}
     </div>
   );
 }

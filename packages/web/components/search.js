@@ -1,23 +1,33 @@
 import { useState } from "react";
-import SearchUser from "../components/search-user";
+import UserCard from "../components/user-card";
 import Image from "next/image";
 import hero from "../public/hero.svg";
 
 export default function Search() {
   const [username, setUsername] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const [searchResult, setSearchResult] = useState(null);
+  const [search, setSearch] = useState(false);
+  const [noResults, setNoResults] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSearch(true);
     const res = await fetch(
       `https://quadratictrust.com/api/search/${username}`
     );
     const result = await res.json();
+    setSearch(false);
     setSearchResult(result.users);
+    if (result.users.length === 0) {
+      setNoResults(true);
+    }
   };
+
   const handleChange = (event) => {
     setUsername(event.target.value);
     if (username === "") {
-      setSearchResult([]);
+      setSearchResult(null);
+      setNoResults(false);
     }
   };
   return (
@@ -28,7 +38,7 @@ export default function Search() {
           <div className="hidden sm:block justify-center mt-3">
             <div className="flex flex-row space-x-4 lg:space-x-8 justify-center">
               <input
-                className="flex-grow max-w-md md:max-w-lg placeholder-trust-blue tracking-widest block bg-white border-2 border-trust-blue rounded-md p-4 text-trust-blue"
+                className="flex-grow max-w-md md:max-w-lg placeholder-trust-blue tracking-widest block bg-white border-2 border-trust-blue rounded-md p-4 text-trust-blue focus:ring-trust-blue focus:border-trust-blue"
                 type="search"
                 placeholder="SEARCH @USERNAME"
                 value={username}
@@ -90,8 +100,38 @@ export default function Search() {
       {username &&
         searchResult &&
         searchResult.map((searchItem, index) => (
-          <SearchUser key={index} user={searchItem} />
+          <UserCard key={index} user={searchItem} />
         ))}
+      {searchResult === null && search && (
+        <div className="flex max-w-6xl mx-auto justify-center mt-4 font-raleway text-lg text-trust-blue sm:px-2 md:px-2">
+          <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+            <path
+              d="M6.59375 12.7125L9.40475 1"
+              stroke="#0F00B7"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M13.1101 10.0434L2.8899 3.66903"
+              stroke="#0F00B7"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M13.8186 5.30299L2.18084 8.40909"
+              stroke="#0F00B7"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>SEARCHING...</span>
+        </div>
+      )}
+      {username && noResults && (
+        <div className="flex max-w-6xl mx-auto justify-center mt-4 font-raleway text-lg text-trust-blue sm:px-2 md:px-2">
+          NO RESULTS
+        </div>
+      )}
     </>
   );
 }
