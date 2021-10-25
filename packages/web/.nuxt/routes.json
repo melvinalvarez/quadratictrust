@@ -1,0 +1,20 @@
+[
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "/Users/melvin/Documents/Github/quadratictrust/packages/web/pages/about.vue",
+    "chunkName": "pages/about"
+  },
+  {
+    "name": "handles-id",
+    "path": "/handles/:id?",
+    "component": "/Users/melvin/Documents/Github/quadratictrust/packages/web/pages/handles/_id.vue",
+    "chunkName": "pages/handles/_id"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/melvin/Documents/Github/quadratictrust/packages/web/pages/index.vue",
+    "chunkName": "pages/index"
+  }
+]

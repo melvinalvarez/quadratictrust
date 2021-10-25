@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/handles/quadratictrust10", {data:[{}],fetch:{},mutations:[]});

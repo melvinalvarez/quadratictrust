@@ -1,0 +1,23 @@
+{
+  "GameFooter": {
+    "description": "Auto imported from components/GameFooter.vue"
+  },
+  "GameMenu": {
+    "description": "Auto imported from components/GameMenu.vue"
+  },
+  "LeaderboardHeader": {
+    "description": "Auto imported from components/LeaderboardHeader.vue"
+  },
+  "LeaderboardTime": {
+    "description": "Auto imported from components/LeaderboardTime.vue"
+  },
+  "LeaderboardUser": {
+    "description": "Auto imported from components/LeaderboardUser.vue"
+  },
+  "Search": {
+    "description": "Auto imported from components/Search.vue"
+  },
+  "VotesReceived": {
+    "description": "Auto imported from components/VotesReceived.vue"
+  }
+}
